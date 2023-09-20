@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	body {
+		@apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-sans m-4 px-8 py-16 md:max-w-xl mx-auto;
+	}
+	a {
+		@apply text-cerulean-600 underline;
+	}
+	h1 {
+		@apply text-3xl font-bold md:text-4xl;
+	}
+}

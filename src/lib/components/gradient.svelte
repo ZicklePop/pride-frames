@@ -1,16 +1,12 @@
 <script lang="ts">
-	import flags from '$lib/constants/flags';
+	import { cssGradient } from '$lib/css-gradient';
 	import type { Flag } from '$lib/constants/flags';
 
-	export let angle = 90;
+	export let cx = 'bg-clip-text text-transparent text-shadow';
 	export let type: Flag = 'lgbtqia';
-
-	const colors: string[] = flags[type];
+	export let angle = 45;
 </script>
 
-<linearGradient id={type} gradientTransform={`rotate(${angle})`}>
-	{#each colors as color, i}
-		<stop offset={`${Math.ceil((100 / colors.length) * i)}%`} stop-color={color} />
-		<stop offset={`${Math.ceil((100 / colors.length) * (i + 1))}%`} stop-color={color} />
-	{/each}
-</linearGradient>
+<span class={cx} style={`background-image: ${cssGradient(type, angle)}`}>
+	<slot />
+</span>

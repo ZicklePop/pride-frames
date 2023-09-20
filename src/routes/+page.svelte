@@ -1,15 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { toPng } from 'html-to-image';
-	import Svg from '$lib/components/svg.svelte'
+	import Svg from '$lib/components/svg.svelte';
+	import File from '$lib/components/file.svelte';
+	import Checkbox from '$lib/components/checkbox.svelte';
+	import FlagPicker from '$lib/components/flag-picker.svelte';
+	import { flagsStore, flagProps } from '$lib/stores';
 
 	let files: FileList | null = null;
 	let inputImage: string | null = '/favicon.png';
 	let outputImage: string | null = '';
 
-	onMount(async () => {
-		await renderPng();
-	});
+	onMount(renderPng);
+	flagsStore.subscribe(renderPng);
+	flagProps.subscribe(renderPng);
 
 	async function renderPng() {
 		if (typeof document !== 'undefined') {
@@ -37,31 +41,45 @@
 	}
 
 	$: if (inputImage) {
-		renderPng()
+		renderPng();
 	}
 </script>
 
-<h1 class="text-3xl font-bold underline">Pride Frames</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-
-<label>
-	Upload
-	<input
-		accept="image/png, image/jpeg"
-		class="sr-only"
-		name="file"
-		type="file"
-		bind:files
-	/>
-</label>
-
-<button on:click={renderPng}>Render</button>
-
-<h2>Input</h2>
+<h1>Pride Frames</h1>
+<p class="my-3">
+	To get started, hit the blue `Select image` button. Please note that no data ever leaves your
+	device.
+</p>
 
 <div id="preview" class="relative">
-	<Svg image={inputImage} />
+	<Svg
+		angle={$flagProps.vertical ? 0 : 90}
+		blur={$flagProps.blur}
+		image={inputImage}
+		round={$flagProps.round}
+		flags={$flagsStore}
+	/>
 </div>
+
+<div class="my-5 mx-4 gap-4 flex md:flex-row flex-col flex-wrap md:items-center">
+	<File bind:files name="file">Import Image</File>
+
+	<button
+		class="text-center select-none text-lg cursor-pointer font-bold rounded-3xl py-2 px-4 bg-gradient-to-b from-cerulean-400 to-cerulean-600 text-white hover:from-cerulean-400 hover:to-cerulean-500 active:from-cerulean-500 active:to-cerulean-600"
+		on:click={renderPng}>Save</button
+	>
+
+	<Checkbox bind:checked={$flagProps.blur} name="blur">Blur</Checkbox>
+	<Checkbox bind:checked={$flagProps.round} name="round">Circle</Checkbox>
+	<Checkbox bind:checked={$flagProps.vertical} name="vertical">Vertical</Checkbox>
+
+	<FlagPicker
+		angle={$flagProps.vertical ? 90 : 0}
+		blur={$flagProps.blur}
+		round={$flagProps.round}
+	/>
+</div>
+<h2>Input</h2>
 
 <h2>Output</h2>
 <img src={outputImage} id="output" alt="output" />
