@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Flag } from '$lib/constants/flags';
 
-	export let checked: Boolean = false;
+	export let checked: boolean = false;
 	export let name: Flag | string;
 </script>
 

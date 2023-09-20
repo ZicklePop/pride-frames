@@ -3,9 +3,9 @@ import type { Flag } from '$lib/constants/flags';
 
 export const initialFlags: Flag[] = ['lgbtqia'];
 
-export const flagsStore = writable(initialFlags);
-export const flagProps = writable({
+export const frameProps = writable({
 	blur: false,
 	round: false,
-	vertical: false
+	vertical: false,
+	flags: initialFlags
 });

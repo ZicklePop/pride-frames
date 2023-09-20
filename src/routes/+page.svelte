@@ -5,15 +5,14 @@
 	import File from '$lib/components/file.svelte';
 	import Checkbox from '$lib/components/checkbox.svelte';
 	import FlagPicker from '$lib/components/flag-picker.svelte';
-	import { flagsStore, flagProps } from '$lib/stores';
+	import { frameProps } from '$lib/stores';
 
 	let files: FileList | null = null;
 	let inputImage: string | null = '/favicon.png';
 	let outputImage: string | null = '';
 
 	onMount(renderPng);
-	flagsStore.subscribe(renderPng);
-	flagProps.subscribe(renderPng);
+	frameProps.subscribe(renderPng);
 
 	async function renderPng() {
 		if (typeof document !== 'undefined') {
@@ -52,13 +51,7 @@
 </p>
 
 <div id="preview" class="relative">
-	<Svg
-		angle={$flagProps.vertical ? 0 : 90}
-		blur={$flagProps.blur}
-		image={inputImage}
-		round={$flagProps.round}
-		flags={$flagsStore}
-	/>
+	<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} />
 </div>
 
 <div class="my-5 mx-4 gap-4 flex md:flex-row flex-col flex-wrap md:items-center">
@@ -69,15 +62,11 @@
 		on:click={renderPng}>Save</button
 	>
 
-	<Checkbox bind:checked={$flagProps.blur} name="blur">Blur</Checkbox>
-	<Checkbox bind:checked={$flagProps.round} name="round">Circle</Checkbox>
-	<Checkbox bind:checked={$flagProps.vertical} name="vertical">Vertical</Checkbox>
+	<Checkbox bind:checked={$frameProps.blur} name="blur">Blur</Checkbox>
+	<Checkbox bind:checked={$frameProps.round} name="round">Circle</Checkbox>
+	<Checkbox bind:checked={$frameProps.vertical} name="vertical">Vertical</Checkbox>
 
-	<FlagPicker
-		angle={$flagProps.vertical ? 90 : 0}
-		blur={$flagProps.blur}
-		round={$flagProps.round}
-	/>
+	<FlagPicker angle={$frameProps.vertical ? 90 : 0} />
 </div>
 <h2>Input</h2>
 
