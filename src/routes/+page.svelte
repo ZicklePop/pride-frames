@@ -13,6 +13,7 @@
 	let outputImage: string | null = '';
 
 	const DEFAULT_SIZE = 1024 * 2;
+	const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 	onMount(renderPng);
 	const framePropsUnsubscribe = frameProps.subscribe(renderPng);
@@ -31,7 +32,7 @@
 			if (svg) {
 				outputImage = await toPng(<HTMLElement>svg, options);
 				// Double render on Safari to fix a bug :(
-				if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+				if (IS_SAFARI) {
 					outputImage = await toPng(<HTMLElement>svg, options);
 				}
 			}
@@ -47,7 +48,12 @@
 				const { width, height } = img;
 				const min = Math.min(width, height);
 				frameProps.update((a) => {
-					a.size = min < DEFAULT_SIZE ? min : DEFAULT_SIZE;
+					// Safari doesn't want to work with bigger images :(
+					if (IS_SAFARI) {
+						a.size = min < DEFAULT_SIZE ? min : DEFAULT_SIZE;
+					} else {
+						a.size = min || DEFAULT_SIZE;
+					}
 					return a;
 				});
 			};
