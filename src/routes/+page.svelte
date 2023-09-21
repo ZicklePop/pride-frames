@@ -9,7 +9,7 @@
 	import Gradient from '$lib/components/gradient.svelte';
 
 	let files: FileList | null = null;
-	let inputImage: string | null = '/favicon.png';
+	let inputImage: string | null = '/apple-touch-icon.png';
 	let outputImage: string | null = '';
 
 	const DEFAULT_SIZE = 1024;
@@ -24,18 +24,15 @@
 	async function renderPng() {
 		if (typeof document !== 'undefined') {
 			const svg = document.querySelector('#preview');
+			const options = {
+				height: $frameProps.size,
+				width: $frameProps.size
+			};
 			if (svg) {
-				outputImage = await toPng(<HTMLElement>svg, {
-					height: $frameProps.size,
-					width: $frameProps.size
-				});
-
+				outputImage = await toPng(<HTMLElement>svg, options);
 				// Double render on Safari to fix a bug :(
 				if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
-					outputImage = await toPng(<HTMLElement>svg, {
-						height: $frameProps.size,
-						width: $frameProps.size
-					});
+					outputImage = await toPng(<HTMLElement>svg, options);
 				}
 			}
 		}
@@ -59,6 +56,7 @@
 
 	$: if (files) {
 		const file = files[0];
+		console.log({ fileSize: file.size });
 		if (file && file.type.startsWith('image/')) {
 			const reader = new FileReader();
 			reader.onload = () => {
@@ -82,9 +80,9 @@
 
 <div class="relative">
 	<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} size={$frameProps.size} />
-	<div class="absolute inset-0">
-		<img src={outputImage} id="output" alt="output" />
-	</div>
+	{#if outputImage}
+		<img src={outputImage} id="output" alt="output" class="absolute inset-0" />
+	{/if}
 </div>
 
 <div class="my-5 gap-4 flex md:flex-row flex-col flex-wrap md:flex-nowrap md:items-center">
