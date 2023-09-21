@@ -6,6 +6,7 @@
 	import Checkbox from '$lib/components/checkbox.svelte';
 	import FlagPicker from '$lib/components/flag-picker.svelte';
 	import { frameProps } from '$lib/stores';
+	import Gradient from '$lib/components/gradient.svelte';
 
 	let files: FileList | null = null;
 	let inputImage: string | null = '/favicon.png';
@@ -68,7 +69,7 @@
 	}
 </script>
 
-<h1>Pride Frames</h1>
+<h1><Gradient>Pride Frames</Gradient></h1>
 <p class="my-3">
 	To get started, hit the blue `Select image` button. Please note that no data ever leaves your
 	device.

@@ -13,3 +13,13 @@
 		@apply text-3xl font-bold md:text-4xl;
 	}
 }
+
+.text-shadow {
+	text-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+	.text-shadow {
+		text-shadow: 0 0 0 rgba(255, 255, 255, 0.6);
+	}
+}
