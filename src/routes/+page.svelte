@@ -13,7 +13,9 @@
 	let outputImage: string | null = '';
 
 	const DEFAULT_SIZE = 1024 * 2;
-	const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+	const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(
+		typeof navigator !== 'undefined' ? navigator.userAgent : ''
+	);
 
 	onMount(renderPng);
 	const framePropsUnsubscribe = frameProps.subscribe(renderPng);
@@ -62,7 +64,6 @@
 
 	$: if (files) {
 		const file = files[0];
-		console.log({ fileSize: file.size });
 		if (file && file.type.startsWith('image/')) {
 			const reader = new FileReader();
 			reader.onload = () => {
@@ -74,7 +75,6 @@
 
 	$: if (inputImage) {
 		getImageMinSize();
-		renderPng();
 	}
 </script>
 
