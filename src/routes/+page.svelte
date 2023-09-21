@@ -11,6 +11,8 @@
 	let inputImage: string | null = '/favicon.png';
 	let outputImage: string | null = '';
 
+	const DEFAULT_SIZE = 1024;
+
 	onMount(renderPng);
 	const framePropsUnsubscribe = frameProps.subscribe(renderPng);
 
@@ -32,6 +34,23 @@
 		}
 	}
 
+	function getImageMinSize() {
+		let size = DEFAULT_SIZE;
+		if (typeof Image !== 'undefined' && inputImage) {
+			const img = new Image();
+			img.src = inputImage;
+			img.onload = () => {
+				const { width, height } = img;
+				const min = Math.min(width, height);
+				size = min;
+			};
+		}
+		frameProps.update((a) => {
+			a.size = size;
+			return a;
+		});
+	}
+
 	$: if (files) {
 		const file = files[0];
 		if (file && file.type.startsWith('image/')) {
@@ -44,6 +63,7 @@
 	}
 
 	$: if (inputImage) {
+		getImageMinSize();
 		renderPng();
 	}
 </script>
@@ -55,24 +75,18 @@
 </p>
 
 <div id="preview" class="relative">
-	<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} />
+	<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} size={$frameProps.size} />
 </div>
 
-<div class="my-5 mx-4 gap-4 flex md:flex-row flex-col flex-wrap md:items-center">
+<div class="my-5 gap-4 flex md:flex-row flex-col flex-wrap md:flex-nowrap md:items-center">
 	<File bind:files name="file">Import Image</File>
-
-	<button
-		class="text-center select-none text-lg cursor-pointer font-bold rounded-3xl py-2 px-4 bg-gradient-to-b from-cerulean-400 to-cerulean-600 text-white hover:from-cerulean-400 hover:to-cerulean-500 active:from-cerulean-500 active:to-cerulean-600"
-		on:click={renderPng}>Save</button
-	>
-
-	<Checkbox bind:checked={$frameProps.blur} name="blur">Blur</Checkbox>
-	<Checkbox bind:checked={$frameProps.round} name="round">Circle</Checkbox>
-	<Checkbox bind:checked={$frameProps.vertical} name="vertical">Vertical</Checkbox>
-
-	<FlagPicker angle={$frameProps.vertical ? 90 : 0} />
+	<div class="flex grow gap-x-5 justify-around">
+		<Checkbox bind:checked={$frameProps.blur} name="blur">Blur</Checkbox>
+		<Checkbox bind:checked={$frameProps.round} name="round">Circle</Checkbox>
+		<Checkbox bind:checked={$frameProps.vertical} name="vertical">Vertical</Checkbox>
+	</div>
 </div>
-<h2>Input</h2>
 
-<h2>Output</h2>
+<FlagPicker angle={$frameProps.vertical ? 90 : 0} />
+
 <img src={outputImage} id="output" alt="output" />

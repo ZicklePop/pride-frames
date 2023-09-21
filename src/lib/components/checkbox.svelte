@@ -5,7 +5,7 @@
 	export let name: Flag | string;
 </script>
 
-<label class="text-lg font-semibold mr-3 cursor-pointer">
+<label class="text-lg font-semibold cursor-pointer">
 	<input
 		bind:checked
 		on:change

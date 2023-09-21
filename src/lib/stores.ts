@@ -5,7 +5,8 @@ export const initialFlags: Flag[] = ['lgbtqia'];
 
 export const frameProps = writable({
 	blur: false,
+	flags: initialFlags,
 	round: false,
-	vertical: false,
-	flags: initialFlags
+	size: 1024,
+	vertical: false
 });

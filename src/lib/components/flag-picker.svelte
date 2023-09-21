@@ -25,22 +25,24 @@
 	}
 </script>
 
-<div class="grid grid-cols-1 gap-y-4 gap-x-2 md:grid-cols-3 py-2 px-4">
+<div class="grid grid-cols-1 gap-y-4 gap-x-0 md:grid-cols-3 md:gap-x-2 md:py-2">
 	{#each flagsArray as type}
-		<Checkbox name={type} checked={$frameProps.flags.includes(type)} on:change={onChange}>
-			<span
-				role="img"
-				aria-label={`${type} flag`}
-				class={`relative overflow-hidden inline-block w-4 h-4 mx-1 ${
-					$frameProps.round ? 'rounded-full' : 'rounded-sm'
-				} align-middle`}
-			>
+		<div class="truncate">
+			<Checkbox name={type} checked={$frameProps.flags.includes(type)} on:change={onChange}>
 				<span
-					class={`absolute inset-0 ${$frameProps.blur ? 'blur-[1px]' : ''}`}
-					style={`background-image: ${cssGradient(type, angle)}`}
-				/>
-			</span>
-			{type}
-		</Checkbox>
+					role="img"
+					aria-label={`${type} flag`}
+					class={`relative overflow-hidden inline-block w-4 h-4 mx-1 ${
+						$frameProps.round ? 'rounded-full' : 'rounded-sm'
+					} align-middle`}
+				>
+					<span
+						class={`absolute inset-0 ${$frameProps.blur ? 'blur-[1px]' : ''}`}
+						style={`background-image: ${cssGradient(type, angle)}`}
+					/>
+				</span>
+				{type}
+			</Checkbox>
+		</div>
 	{/each}
 </div>
