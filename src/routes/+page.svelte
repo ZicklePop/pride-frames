@@ -47,7 +47,7 @@
 				const { width, height } = img;
 				const min = Math.min(width, height);
 				frameProps.update((a) => {
-					a.size = min ? min : DEFAULT_SIZE;
+					a.size = min < DEFAULT_SIZE ? min : DEFAULT_SIZE;
 					return a;
 				});
 			};
