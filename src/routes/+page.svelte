@@ -25,11 +25,17 @@
 		if (typeof document !== 'undefined') {
 			const svg = document.querySelector('#preview');
 			if (svg) {
-				outputImage = await toPng(<HTMLElement>svg);
+				outputImage = await toPng(<HTMLElement>svg, {
+					height: $frameProps.size,
+					width: $frameProps.size
+				});
 
 				// Double render on Safari to fix a bug :(
 				if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
-					outputImage = await toPng(<HTMLElement>svg);
+					outputImage = await toPng(<HTMLElement>svg, {
+						height: $frameProps.size,
+						width: $frameProps.size
+					});
 				}
 			}
 		}
@@ -43,13 +49,12 @@
 			img.onload = () => {
 				const { width, height } = img;
 				const min = Math.min(width, height);
-				size = min;
+				frameProps.update((a) => {
+					a.size = min ? min : DEFAULT_SIZE;
+					return a;
+				});
 			};
 		}
-		frameProps.update((a) => {
-			a.size = size;
-			return a;
-		});
 	}
 
 	$: if (files) {
@@ -75,8 +80,11 @@
 	device.
 </p>
 
-<div id="preview" class="relative">
+<div class="relative">
 	<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} size={$frameProps.size} />
+	<div class="absolute inset-0">
+		<img src={outputImage} id="output" alt="output" />
+	</div>
 </div>
 
 <div class="my-5 gap-4 flex md:flex-row flex-col flex-wrap md:flex-nowrap md:items-center">
@@ -89,5 +97,3 @@
 </div>
 
 <FlagPicker angle={$frameProps.vertical ? 90 : 0} />
-
-<img src={outputImage} id="output" alt="output" />

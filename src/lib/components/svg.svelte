@@ -21,7 +21,7 @@
 		: {};
 </script>
 
-<svg viewBox={`0 0 ${size} ${size}`}>
+<svg id="preview" viewBox={`0 0 ${size} ${size}`}>
 	<defs>
 		{#each $frameProps.flags as flag}
 			<LinearGradient type={flag} {angle} />
