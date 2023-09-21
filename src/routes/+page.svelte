@@ -12,7 +12,7 @@
 	let inputImage: string | null = '/apple-touch-icon.png';
 	let outputImage: string | null = '';
 
-	const DEFAULT_SIZE = 1024 * 2;
+	const DEFAULT_SIZE = 1024;
 	const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(
 		typeof navigator !== 'undefined' ? navigator.userAgent : ''
 	);
