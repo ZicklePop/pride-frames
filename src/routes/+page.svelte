@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { toPng } from 'html-to-image';
 	import Svg from '$lib/components/svg.svelte';
 	import File from '$lib/components/file.svelte';
@@ -12,7 +12,11 @@
 	let outputImage: string | null = '';
 
 	onMount(renderPng);
-	frameProps.subscribe(renderPng);
+	const framePropsUnsubscribe = frameProps.subscribe(renderPng);
+
+	onDestroy(() => {
+		framePropsUnsubscribe();
+	});
 
 	async function renderPng() {
 		if (typeof document !== 'undefined') {
