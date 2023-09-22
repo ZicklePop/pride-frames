@@ -42,7 +42,6 @@
 	}
 
 	function getImageMinSize() {
-		let size = DEFAULT_SIZE;
 		if (typeof Image !== 'undefined' && inputImage) {
 			const img = new Image();
 			img.src = inputImage;

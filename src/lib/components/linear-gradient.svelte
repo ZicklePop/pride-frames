@@ -5,7 +5,7 @@
 	export let angle = 90;
 	export let type: Flag = 'lgbtqia';
 
-	const colors: string[] = flags[type];
+	$: colors = flags[type];
 </script>
 
 <linearGradient id={type} gradientTransform={`rotate(${angle})`}>

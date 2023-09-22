@@ -11,7 +11,7 @@
 
 	function onChange(e: Event) {
 		const target = e.target as HTMLInputElement | null;
-    const name = target?.name as Flag;
+		const name = target?.name as Flag;
 		if (target?.checked) {
 			frameProps.update((a) => {
 				a.flags.push(name);
@@ -19,7 +19,7 @@
 			});
 		} else {
 			frameProps.update((a) => {
-        a.flags = a.flags.filter((f) => f !== name);
+				a.flags = a.flags.filter((f) => f !== name);
 				return a;
 			});
 		}
