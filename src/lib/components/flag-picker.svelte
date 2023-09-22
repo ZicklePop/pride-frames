@@ -11,15 +11,15 @@
 
 	function onChange(e: Event) {
 		const target = e.target as HTMLInputElement | null;
+    const name = target?.name as Flag;
 		if (target?.checked) {
 			frameProps.update((a) => {
-				a.flags.push(target?.name as Flag);
+				a.flags.push(name);
 				return a;
 			});
 		} else {
 			frameProps.update((a) => {
-				a.flags.filter((f) => f !== (target?.name as Flag));
-				return a;
+				return a.flags.filter((f) => f !== name);
 			});
 		}
 	}
