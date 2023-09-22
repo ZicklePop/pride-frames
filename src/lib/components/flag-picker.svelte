@@ -18,7 +18,7 @@
 			});
 		} else {
 			frameProps.update((a) => {
-				a.flags.splice(a.flags.indexOf(target?.name as Flag), 1);
+				a.flags.filter((f) => f !== (target?.name as Flag));
 				return a;
 			});
 		}
