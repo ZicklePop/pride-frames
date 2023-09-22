@@ -19,7 +19,8 @@
 			});
 		} else {
 			frameProps.update((a) => {
-				return a.flags.filter((f) => f !== name);
+        a.flags = a.flags.filter((f) => f !== name);
+				return a;
 			});
 		}
 	}
