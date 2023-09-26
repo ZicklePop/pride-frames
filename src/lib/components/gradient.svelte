@@ -4,10 +4,11 @@
 
 	export let type: Flag = 'lgbtqia';
 	export let angle = 45;
+	export let className = 'text-shadow';
 </script>
 
 <span
-	class="bg-clip-text text-transparent text-shadow"
+	class={`bg-clip-text text-transparent ${className}`}
 	style={`background-image: ${cssGradient(type, angle)}`}
 >
 	<slot />

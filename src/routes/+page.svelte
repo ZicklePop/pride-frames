@@ -88,8 +88,8 @@
 
 <h1><Gradient>Pride Frames</Gradient></h1>
 <p class="my-3">
-	To get started, hit the blue `Select image` button. Please note that no data ever leaves your
-	device.
+	To get started framing yourself in pride flags, hit the `Import image` button. Your data never
+	leaves your device.
 </p>
 
 <div class="relative">
