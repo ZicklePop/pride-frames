@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import Footer from '$lib/components/footer.svelte';
 
 	const TITLE = 'Pride Frames by melanie kat';
 	const DESCRIPTION = 'Surround yourself with pride flags';
@@ -12,3 +13,4 @@
 	<meta property="og:description" content={DESCRIPTION} />
 </svelte:head>
 <slot />
+<Footer />

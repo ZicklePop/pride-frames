@@ -1,38 +1,13 @@
-# create-svelte
+# pride-frames
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+_Put a pride flag frame on an image for your profile pictures_
 
-## Creating a project
+This is a web version of an [Apple Shortcut](https://routinehub.co/shortcut/2664/) I made in 2018 that pushed the limits of what you can do with the platform and dynamic image generation using the built-in toolset. The performance of the shortcut got worse overtime and stopped working in 2022.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## special thanks
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Thank you [@TheEnbyWitch](https://github.com/TheEnbyWitch) for helping me with my first svelte project.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## limitations
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- Safari has a few issues with maximum image widths and can get pretty slow with large amounts of flags added to an image. I've tried to work around this the best I can without strict limitations where possible.
