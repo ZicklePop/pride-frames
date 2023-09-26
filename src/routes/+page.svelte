@@ -7,10 +7,12 @@
 	import FlagPicker from '$lib/components/flag-picker.svelte';
 	import { frameProps } from '$lib/stores';
 	import Gradient from '$lib/components/gradient.svelte';
+	import Loading from '$lib/components/loading.svelte';
 
 	let files: FileList | null = null;
 	let inputImage: string | null = '/apple-touch-icon.png';
 	let outputImage: string | null = '';
+	let loading = false;
 
 	const DEFAULT_SIZE = 1024;
 	const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(
@@ -31,12 +33,14 @@
 				height: $frameProps.size,
 				width: $frameProps.size
 			};
+			loading = true;
 			if (svg) {
 				outputImage = await toPng(<HTMLElement>svg, options);
 				// Double render on Safari to fix a bug :(
 				if (IS_SAFARI) {
 					outputImage = await toPng(<HTMLElement>svg, options);
 				}
+				loading = false;
 			}
 		}
 	}
@@ -85,6 +89,9 @@
 
 <div class="relative">
 	<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} size={$frameProps.size} />
+	{#if loading}
+		<Loading />
+	{/if}
 	{#if outputImage}
 		<img src={outputImage} id="output" alt="output" class="absolute inset-0" />
 	{/if}
