@@ -13,6 +13,7 @@
 	let inputImage: string | null = '/apple-touch-icon.png';
 	let outputImage: string | null = '';
 	let loading = false;
+	let firstLoad = true;
 
 	const DEFAULT_SIZE = 1024;
 	const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(
@@ -33,7 +34,7 @@
 				height: $frameProps.size,
 				width: $frameProps.size
 			};
-			loading = true;
+			loading = firstLoad ? false : true;
 			if (svg) {
 				outputImage = await toPng(<HTMLElement>svg, options);
 				// Double render on Safari to fix a bug :(
@@ -41,6 +42,10 @@
 					outputImage = await toPng(<HTMLElement>svg, options);
 				}
 				loading = false;
+			}
+
+			if (firstLoad) {
+				firstLoad = false;
 			}
 		}
 	}
@@ -92,8 +97,8 @@
 	{#if loading}
 		<Loading />
 	{/if}
-	{#if outputImage}
-		<img src={outputImage} id="output" alt="output" class="absolute inset-0" />
+	{#if outputImage && !loading}
+		<img src={outputImage} id="output" alt="output" class="absolute inset-0 w-full" />
 	{/if}
 </div>
 
