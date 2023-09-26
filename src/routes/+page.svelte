@@ -1,13 +1,14 @@
 <script lang="ts">
+	import { frameProps } from '$lib/stores';
+	import { IS_SAFARI } from '$lib/is-safari';
 	import { onMount, onDestroy } from 'svelte';
 	import { toPng } from 'html-to-image';
-	import Svg from '$lib/components/svg.svelte';
-	import File from '$lib/components/file.svelte';
 	import Checkbox from '$lib/components/checkbox.svelte';
+	import File from '$lib/components/file.svelte';
 	import FlagPicker from '$lib/components/flag-picker.svelte';
-	import { frameProps } from '$lib/stores';
 	import Gradient from '$lib/components/gradient.svelte';
 	import Loading from '$lib/components/loading.svelte';
+	import Svg from '$lib/components/svg.svelte';
 
 	let files: FileList | null = null;
 	let inputImage: string | null = '/apple-touch-icon.png';
@@ -16,9 +17,6 @@
 	let firstLoad = true;
 
 	const DEFAULT_SIZE = 1024;
-	const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(
-		typeof navigator !== 'undefined' ? navigator.userAgent : ''
-	);
 
 	onMount(renderPng);
 	const framePropsUnsubscribe = frameProps.subscribe(renderPng);

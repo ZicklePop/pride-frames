@@ -1,18 +1,28 @@
 <script lang="ts">
 	import { cssGradient } from '$lib/css-gradient';
 	import { frameProps } from '$lib/stores';
+	import { IS_SAFARI } from '$lib/is-safari';
 	import allFlags from '$lib/constants/flags';
 	import Checkbox from '$lib/components/checkbox.svelte';
 	import type { Flag } from '$lib/constants/flags';
 
 	export let angle = 90;
+	let shouldWarn = IS_SAFARI;
 
+	const FLAG_LIMIT = 4;
 	const flagsArray = Object.keys(allFlags) as Flag[];
 
 	function onChange(e: Event) {
 		const target = e.target as HTMLInputElement | null;
 		const name = target?.name as Flag;
 		if (target?.checked) {
+			const flagLength = $frameProps.flags.length;
+			if (shouldWarn && flagLength >= FLAG_LIMIT) {
+				window.alert(
+					`I won't stop you, just know that adding too many flags can lead to unforeseen consequences.`
+				);
+				shouldWarn = false;
+			}
 			frameProps.update((a) => {
 				a.flags.push(name);
 				return a;
