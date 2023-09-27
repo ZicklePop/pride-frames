@@ -4,7 +4,7 @@
 
 @layer base {
 	body {
-		@apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-sans m-4 px-8 py-16 md:max-w-xl mx-auto;
+		@apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-sans m-4 px-8 py-16 md:max-w-xl mx-auto xl:max-w-7xl;
 	}
 	a {
 		@apply text-cerulean-600 underline;

@@ -89,24 +89,27 @@
 	To get started framing yourself in pride flags, hit the `Import image` button. Your data never
 	leaves your device.
 </p>
-
-<div class="relative">
-	<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} size={$frameProps.size} />
-	{#if loading}
-		<Loading />
-	{/if}
-	{#if outputImage && !loading}
-		<img src={outputImage} id="output" alt="output" class="absolute inset-0 w-full" />
-	{/if}
-</div>
-
-<div class="my-5 gap-4 flex md:flex-row flex-col flex-wrap md:flex-nowrap md:items-center">
-	<File bind:files name="file">Import Image</File>
-	<div class="flex grow gap-x-5 justify-around">
-		<Checkbox bind:checked={$frameProps.blur} name="blur">Blur</Checkbox>
-		<Checkbox bind:checked={$frameProps.round} name="round">Circle</Checkbox>
-		<Checkbox bind:checked={$frameProps.vertical} name="vertical">Vertical</Checkbox>
+<div class="xl:flex xl:flex-row xl:justify-between xl:items-center xl:gap-x-4 xl:my-8">
+	<div class="xl:w-1/2">
+		<div class="relative">
+			<Svg angle={$frameProps.vertical ? 0 : 90} image={inputImage} size={$frameProps.size} />
+			{#if loading}
+				<Loading />
+			{/if}
+			{#if outputImage && !loading}
+				<img src={outputImage} id="output" alt="output" class="absolute inset-0 w-full" />
+			{/if}
+		</div>
+	</div>
+	<div class="xl:w-1/2 xl:max-w-lg">
+		<div class="my-5 gap-4 flex md:flex-row flex-col flex-wrap md:flex-nowrap md:items-center">
+			<File bind:files name="file">Import Image</File>
+			<div class="flex grow gap-x-5 justify-around">
+				<Checkbox bind:checked={$frameProps.blur} name="blur">Blur</Checkbox>
+				<Checkbox bind:checked={$frameProps.round} name="round">Circle</Checkbox>
+				<Checkbox bind:checked={$frameProps.vertical} name="vertical">Vertical</Checkbox>
+			</div>
+		</div>
+		<FlagPicker angle={$frameProps.vertical ? 90 : 0} />
 	</div>
 </div>
-
-<FlagPicker angle={$frameProps.vertical ? 90 : 0} />
