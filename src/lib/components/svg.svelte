@@ -17,7 +17,7 @@
 				filter: `url(#${FRAME_BLUR})`,
 				transform: 'scale(1.03)',
 				style: 'transform-origin: 50% 50%'
-		  }
+			}
 		: {};
 </script>
 
